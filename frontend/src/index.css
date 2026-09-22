@@ -1,111 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Brand (fixed) */
+  --fc-azure-600: #1655F2;
+  --fc-navy-900: #132335;
+  --fc-ink-1300: #0C1927;
+  --fc-navy-footer: #192839;
+  --fc-highlight: #00EA5F;
+  --fc-white: #FFFFFF;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Derived product scale - light */
+  --bg-canvas: #F4F6FA;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #EEF2F8;
+  --border: #DCE2EB;
+  --text-primary: #0C1927;
+  --text-secondary: #4A5B70;
+  --text-muted: #7A889A;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Machine states */
+  --st-run: #1E9E5A;
+  --st-micro: #F2B632;
+  --st-down: #E5484D;
+  --st-plan: #6E56CF;
+  --st-idle: #8B98A9;
+  --st-hold: #EA7A1A;
+  --st-nosch: #E3E8EF;
+  --st-disc: #5B6776;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Chart surfaces */
+  --chart-split: #EEF2F8;
+  --chart-axis: #DCE2EB;
+  --chart-label: #4A5B70;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root[data-theme='dark'] {
+  --bg-canvas: #0B1622;
+  --bg-surface: #132335;
+  --bg-subtle: #1A2C40;
+  --border: #2A3D52;
+  --text-primary: #E8EEF6;
+  --text-secondary: #A7B5C6;
+  --text-muted: #7A8BA0;
+  --chart-split: #1A2C40;
+  --chart-axis: #2A3D52;
+  --chart-label: #A7B5C6;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
+/* The app owns its own scrolling: only inner panes scroll, never the page. */
+html, body { height: 100%; overflow: hidden; }
+#root { height: 100%; overflow: hidden; }
 
 body {
   margin: 0;
+  background: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+/* Tabular numerals everywhere numbers are shown */
+.tnum, table, .kpi-value { font-variant-numeric: tabular-nums; }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
+/* Focus ring - 2px azure, 2px offset (design theme §4) */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--fc-azure-600);
+  outline-offset: 2px;
   border-radius: 4px;
-  color: var(--text-h);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* Scrollbars tuned for dense control-room tables */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; border: 2px solid var(--bg-canvas); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+::-webkit-scrollbar-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+@layer components {
+  .card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(12, 25, 39, .06);
+  }
+  .card-title { font-size: 15px; line-height: 20px; font-weight: 600; color: var(--text-primary); }
+  .lbl { font-size: 12px; line-height: 16px; color: var(--text-secondary); }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; }
+}
+
+/* Entrance motion for overlays and cards - all suppressed under reduced motion above */
+@keyframes fc-fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fc-slide-up { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+@keyframes fc-slide-left { from { opacity: 0; transform: translateX(24px) } to { opacity: 1; transform: none } }
+@keyframes fc-pop { from { opacity: 0; transform: scale(.97) } to { opacity: 1; transform: none } }
+
+.fc-fade { animation: fc-fade-in .18s ease-out both; }
+.fc-rise { animation: fc-slide-up .22s cubic-bezier(.16,1,.3,1) both; }
+.fc-drawer-in { animation: fc-slide-left .26s cubic-bezier(.16,1,.3,1) both; }
+.fc-pop-in { animation: fc-pop .18s cubic-bezier(.16,1,.3,1) both; }
+
+/* Cards lift slightly on hover where they are interactive */
+.card-interactive { transition: box-shadow .16s ease, border-color .16s ease, transform .16s ease; }
+.card-interactive:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(12, 25, 39, .10); }
+
+/* Live pulse (suppressed under reduced motion by the rule above) */
+@keyframes fc-pulse { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
+.fc-pulse { animation: fc-pulse 1.6s ease-in-out infinite; }
