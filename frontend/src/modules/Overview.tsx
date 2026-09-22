@@ -133,7 +133,7 @@ export function Overview() {
         <KpiTile label="Overdue logbooks" value={overdueLogs.length} tone={overdueLogs.length ? 'danger' : 'default'} onClick={() => nav('/logbooks')} />
       </KpiStrip>
 
-      <div className="grid gap-4 xl:h-[330px] xl:grid-cols-3">
+      <div className="grid items-start gap-4 xl:grid-cols-3">
         <LineCard
           title="L1 Kratom / MIT"
           subtitle="Biomass → extraction → LLE → crystallization → freebase → acetate salt"
@@ -155,7 +155,7 @@ export function Overview() {
           onClick={() => nav('/oee?line=L2')}
         />
 
-        <Card className="flex min-h-0 flex-col">
+        <Card className="flex max-h-[330px] flex-col">
           <CardHeader title="Needs attention" subtitle={`${downNow.length + openDevs.length + overdueLogs.length + untagged.length} open items`} />
           <ul className="min-h-0 flex-1 space-y-1.5 overflow-y-auto p-3">
             {downNow.slice(0, 4).map(({ asset, ev }) => (
@@ -284,7 +284,7 @@ function LineCard({
           Drill
         </button>
       } />
-      <div className="min-h-0 flex-1 overflow-y-auto p-4">
+      <div className="p-4">
         <div className="flex items-baseline gap-2">
           <span className="text-kpi font-semibold tnum" style={{ color: tone }}>{pct(oee.oee)}</span>
           <span className="text-2xs text-txt-muted">constraint {constraint}</span>
